@@ -1,5 +1,5 @@
-var gulp       = require('gulp'),
-    browserify = require('gulp-browserify');
+var gulp       = require('gulp');
+var browserify = require('browserify');
     var babelify = require('babelify');
 var uglify = require('gulp-uglify');
 //var autoprefixer = require('gulp-autoprefixer');
@@ -9,7 +9,7 @@ var buffer = require('vinyl-buffer');
 var concat = require('gulp-concat');
 var minifyCSS = require('gulp-minify-css');
 
-gulp.task('build-js', function () {
+gulp.task('build-jsx', function () {
 
     browserify({
         entries: './views/app/main.jsx',
@@ -27,8 +27,8 @@ gulp.task('build-js', function () {
 
 });
 
-gulp.task('watch-js', function() {
-    gulp.watch(['./views/app/**/*.js', './views/app/*.js'], ['build-js']);
+gulp.task('watch-jsx', function() {
+    gulp.watch(['./views/app/**/*.jsx', './views/app/*.jsx'], ['build-jsx']);
 });
 
-gulp.task('default', ['build-js','watch-js']);
+gulp.task('default', ['build-jsx','watch-jsx']);

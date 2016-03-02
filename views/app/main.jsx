@@ -8,4 +8,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
   ReactDom.render(
     React.createElement(Router, {history: browserHistory, routes: routes}), document.getElementById('react-main-mount')
   );
-}
+});
