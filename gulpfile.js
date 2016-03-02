@@ -1,13 +1,28 @@
 var gulp       = require('gulp'),
     browserify = require('gulp-browserify');
+    var babelify = require('babelify');
+var uglify = require('gulp-uglify');
+//var autoprefixer = require('gulp-autoprefixer');
+var rename = require('gulp-rename');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var concat = require('gulp-concat');
+var minifyCSS = require('gulp-minify-css');
 
 gulp.task('build-js', function () {
 
-    gulp.src(['views/app/main.js'])
-        .pipe(browserify({
-            debug: true,
-            transform: [ 'reactify' ]
-        }))
+    browserify({
+        entries: './views/app/main.jsx',
+        extensions: ['jsx'],
+        debug: true
+    })
+        .transform("babelify",
+        {
+            presets: ['react', 'es2015']
+        })
+        .bundle()
+        .pipe(source('bundle.js'))
+        .pipe(rename('appTarget.js'))
         .pipe(gulp.dest('./public/'));
 
 });

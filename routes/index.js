@@ -5,14 +5,17 @@ var ReactApp = React.createFactory(require('../views/app/components/reactApp'));
 var Essai = React.createFactory(require('../views/app/components/essai'));
 
 /* GET home page. */
-router.get('/', function(req, res, next) { 
-  var reactHtml = React.renderToString(ReactApp({}));  
-  res.render('index.ejs', {reactOutput: reactHtml});
+
+router.get('/app', function(req, res, next) { 
+  res.render(req.url,{'essai':'essai'})
 });
 
 router.get('/essai', function(req, res, next) { 
-  var reactHtml = React.renderToString(Essai({}));
-  res.render('index.ejs', {reactOutput: reactHtml});
+  res.render(req.url,{'tryout':'tryout'})
+});
+
+router.get('/', function(req, res, next) { 
+  res.render(req.url,{'tryout22':'tryout22'})
 });
 
 module.exports = router;

@@ -1,9 +1,16 @@
+'use strict';
+
+require('babel-register')({
+  presets: ['react', 'es2015'],
+});
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var ReactEngine = require('react-engine');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/weatherapp');
 
@@ -16,8 +23,26 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+/*app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');*/
+var reactRoutesFilePath = path.join(__dirname + '/views/app/config/routes.jsx');
+
+var engine = ReactEngine.server.create({
+  routes: require(reactRoutesFilePath),
+  routesFilePath: reactRoutesFilePath,
+});
+
+// set the engine
+app.engine('.jsx', engine);
+
+// set the view directory
+app.set('views', path.join(__dirname, '/app/components'));
+
+// set jsx as the view engine
+app.set('view engine', 'jsx');
+
+// finally, set the custom view
+app.set('view', ReactEngine.expressView);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
