@@ -5,6 +5,7 @@ var ReactDOMServer = require('react-dom/server')
 var ReactApp = React.createFactory(require('../views/app/components/reactApp'));
 var Essai = React.createFactory(require('../views/app/components/essai'));
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var reactHtml = React.renderToString(ReactApp({}));

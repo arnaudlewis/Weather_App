@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/weatherapp');
+var Router = require('./routes/Router');
 
 // JSX transpiler
 require('node-jsx').install();
@@ -26,6 +27,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function (req, res, next) {
+    var baseUri = req.protocol + '://' + req.get('host');
+    res.locals.Router = Router.init(baseUri);
+    next();
+});
 
 app.use('/', routes);
 app.use('/users', users);
